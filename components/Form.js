@@ -1,5 +1,5 @@
 
-export default function Form({formData, setFormData}) {
+export default function Form({formData, setFormData, setOpenWindow}) {
 
     const handleChange = (e) => {
         setFormData(
@@ -16,6 +16,8 @@ export default function Form({formData, setFormData}) {
     const fieldStyles = 'focus:bg-slate-100 focus:outline-0 px-6 py-4 mb-[-px] border-b-2 border-black'
     
     return (
+     <div className="bg-gray-200 p-4 fixed bottom-0">
+    <div className="h-6 w-6 bg-red-500" onClick={() => setOpenWindow(0)} ></div>
      <form 
         name="form" onSubmit={handleSubmit}
         className=''>
@@ -39,5 +41,6 @@ export default function Form({formData, setFormData}) {
                 >SEND
             </button>
         </form>
+        </div>
   )
 }
