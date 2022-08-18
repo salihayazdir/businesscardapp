@@ -10,6 +10,7 @@ export default function Home() {
   const [formData, setFormData] = useState({ name: '', email: '',phone: '', title: ''});
   const [openWindow, setOpenWindow] = useState(1);
   const [imageUrl, setImageUrl] = useState('');
+  const [responseEl, setResponseEl] = useState('no response')
 
   const qrData = `BEGIN:VCARD
 N:${formData.name};
@@ -73,7 +74,8 @@ END:VCARD`
       <div className="m-10">
         <QRCode value={qrData} />
       </div>
-      <Upload handleImageUrlSubmit={handleImageUrlSubmit} />
+      <Upload handleImageUrlSubmit={handleImageUrlSubmit} responseEl={responseEl} setResponseEl={setResponseEl} />
+      <div className='text-lg'>{responseEl}</div>
     </>
   )
 }
