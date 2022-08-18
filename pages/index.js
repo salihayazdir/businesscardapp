@@ -3,6 +3,7 @@ import Form from '../components/Form'
 import { useState } from 'react'
 import QRCode from "react-qr-code";
 import axios from 'axios';
+import { Upload } from '../components/Upload';
 
 export default function Home() {
 
@@ -72,6 +73,7 @@ END:VCARD`
       <div className="m-10">
         <QRCode value={qrData} />
       </div>
+      <Upload/>
     </>
   )
 }
