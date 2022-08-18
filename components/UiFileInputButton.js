@@ -9,18 +9,23 @@ export const UiFileInputButton = (props) => {
     };
   
     const onChangeHandler = (event) => {
+      console.log("///////////event.target.files//////////////", event.target.files[0])
       if (!event.target.files.length) {
+        console.log("NO FILES!")
         return;
       }
   
       const formData = new FormData();
-  
-      Array.from(event.target.files).forEach((file) => {
-        formData.append(event.target.name, file);
-      });
+      formData.append("media", event.target.files[0]);
+      formData.append("key", "00001d6925845e2300261f742925640f");
+      console.log("///////////event.target//////////////", event.target)
+
+      // Array.from(event.target.files).forEach((file) => {
+      //   formData.append(event.target.name, file);
+      // });
   
       props.onChange(formData);
-  
+      console.log("///////////formdata//////////////", formData)
       formRef.current.reset();
     };
   
@@ -35,7 +40,7 @@ export const UiFileInputButton = (props) => {
           name={props.uploadFileName}
           onChange={onChangeHandler}
           ref={fileInputRef}
-          style={{ display: 'none' }}
+          style={{ display: 'block' }}
           type="file"
         />
       </form>
