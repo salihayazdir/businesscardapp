@@ -2,20 +2,51 @@ import Head from 'next/head'
 import Form from '../components/Form'
 import { useState } from 'react'
 import QRCode from "react-qr-code";
+import axios from 'axios';
 
 export default function Home() {
-  
-  const [formData, setFormData] = useState({ name: '', email: '',phone: '', })
-  const [openWindow, setOpenWindow] = useState(1)
+
+  const [formData, setFormData] = useState({ name: '', email: '',phone: '', title: ''});
+  const [openWindow, setOpenWindow] = useState(1);
+  const [imageUrl, setImageUrl] = useState('');
 
   const qrData = `BEGIN:VCARD
 N:${formData.name};
 TEL;TYPE=work,VOICE:${formData.phone}
 EMAIL:${formData.email}
-ORG:Bileşim A.Ş.
-TITLE:Lead Dev
+ORG:BILESIM FINANSAL TEKNOLOJILER VE ODEME SISTEMLERI
+TITLE:${formData.title}
 VERSION:3.0
 END:VCARD`
+
+  const getTextAnnotations = async (url) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_AZURE}/api/image?image=${url}`
+      );
+      console.log(response);
+      return response.data.textContent[0].split("\n")
+    } catch (err) {
+      console.error(err);
+      return ["error", err]
+    }
+  };
+
+  const handleImageUrlInput = e => setImageUrl(e.target.value);
+  
+  const handleImageUrlSubmit = async (e) => {
+    e.preventDefault();
+    const textAnnotations = await getTextAnnotations(imageUrl);
+    console.log(textAnnotations);
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        name: textAnnotations[2],
+        email: textAnnotations[7],
+        title: `${textAnnotations[3]} - ${textAnnotations[4]}`,
+      }
+    })
+  }
 
   return (
     <>
@@ -30,8 +61,13 @@ END:VCARD`
       ?
       <Form formData={formData} setFormData={setFormData} setOpenWindow={setOpenWindow} />
       :
-      <button className="fixed bottom-10 bg-blue-500 p-10" onClick={() => setOpenWindow(1)} >form</button>
+      <button className="fixed p-10 bg-blue-500 bottom-10" onClick={() => setOpenWindow(1)} >form</button>
       }
+
+      <form onSubmit={handleImageUrlSubmit}>
+        <input id='imageurl' type='imageurl' name='imageurl' placeholder='image url' onChange={handleImageUrlInput} value={imageUrl}/>
+        <button type='submit'>GET TEXT FROM IMAGE</button>
+      </form>
 
       <div className="m-10">
         <QRCode value={qrData} />
@@ -39,8 +75,6 @@ END:VCARD`
     </>
   )
 }
-
-
 
 // BEGIN:VCARD
 // N:${formData.name};
