@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import {MdAddAPhoto} from "react-icons/md";
 
 export const UiFileInputButton = (props) => {
     const fileInputRef = useRef(null);
@@ -30,9 +31,13 @@ export const UiFileInputButton = (props) => {
     };
   
     return (
-      <form ref={formRef}>
-        <button type="button" onClick={onClickHandler}>
-          {props.label}
+      <form ref={formRef} className='flex'>
+        <button 
+          type="button"
+          className="flex items-center justify-between w-full p-4 mx-4 mt-4 font-semibold text-left text-white bg-blue-600 rounded-md "
+          onClick={onClickHandler}
+          >{props.label}
+          <MdAddAPhoto size={26} />
         </button>
         <input
           accept={props.acceptedFileTypes}
@@ -40,7 +45,7 @@ export const UiFileInputButton = (props) => {
           name={props.uploadFileName}
           onChange={onChangeHandler}
           ref={fileInputRef}
-          style={{ display: 'block' }}
+          style={{ display: 'none' }}
           type="file"
         />
       </form>

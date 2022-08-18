@@ -1,26 +1,26 @@
 import axios from "axios";
 import { UiFileInputButton } from "./UiFileInputButton";
 
-export const Upload = ({passDownResponse}) => {
+export const Upload = ({passDownResponse, setIsLoading}) => {
   
-    const onChange = async (formData) => {
-      
-      const config = {
-        headers: { 'content-type': 'multipart/form-data' },
-        onUploadProgress: (event) => {
-          console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
-        },
-      };
-      
-      const response = await axios.post('https://thumbsnap.com/api/upload', formData, config)
-      passDownResponse(response);
+  const onChange = async (formData) => {
+    setIsLoading(true)
+    const config = {
+      headers: { 'content-type': 'multipart/form-data' },
+      onUploadProgress: (event) => {
+        console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
+      },
     };
-  
-    return (
-      <UiFileInputButton
-        label="Upload Single File"
-        uploadFileName="theImage"
-        onChange={onChange}
-      />
-    );
+    
+    const response = await axios.post('https://thumbsnap.com/api/upload', formData, config)
+    passDownResponse(response)
   };
+
+  return (
+    <UiFileInputButton
+      label="Fotoğraftan Al"
+      uploadFileName="theImage"
+      onChange={onChange}
+    />
+  );
+};
