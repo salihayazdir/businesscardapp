@@ -1,7 +1,8 @@
 import axios from "axios";
 import { UiFileInputButton } from "./UiFileInputButton";
+import { GetServerSideProps } from "next";
 
-export const Upload = (props) => {
+export const Upload = ({handleImageUrlSubmit}) => {
   
     const onChange = async (formData) => {
       const config = {
@@ -12,8 +13,9 @@ export const Upload = (props) => {
       };
   
       const response = await axios.post('/api/uploads', formData, config);
-  
+      const filename = response.data.filename
       console.log('response', response.data);
+      handleImageUrlSubmit(`https://businesscardapp.vercel.app/uploads/${filename}`)
     };
   
     return (

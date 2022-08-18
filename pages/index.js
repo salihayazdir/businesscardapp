@@ -73,7 +73,7 @@ END:VCARD`
       <div className="m-10">
         <QRCode value={qrData} />
       </div>
-      <Upload/>
+      <Upload handleImageUrlSubmit={handleImageUrlSubmit} />
     </>
   )
 }
