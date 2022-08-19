@@ -1,0 +1,36 @@
+{
+    "theme_color": "#20A5DD",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "name": "Bile\u015fim Kartvizit",
+    "short_name": "Kartvizit",
+    "description": "Bile\u015fim Kartvizit Uygulamas\u0131",
+    "icons": [
+        {
+          "src": "manifest-icon-192.maskable.png",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "any"
+        },
+        {
+          "src": "manifest-icon-192.maskable.png",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "maskable"
+        },
+        {
+          "src": "manifest-icon-512.maskable.png",
+          "sizes": "512x512",
+          "type": "image/png",
+          "purpose": "any"
+        },
+        {
+          "src": "manifest-icon-512.maskable.png",
+          "sizes": "512x512",
+          "type": "image/png",
+          "purpose": "maskable"
+        }
+      ]
+}
