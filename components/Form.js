@@ -34,15 +34,27 @@ export default function Form({ cardState, setCardState, setOpenWindow }) {
     populateAnnotations(response.data);
   }
   
+  const readCardArray = (array) => {
+    const email = array.find(value => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value));
+    
+    const nameIndex = array.findIndex(value => /Sistemleri/.test(value)) + 1;
+    const name = array[nameIndex]
+
+    const titleIndex = nameIndex+1
+    const title = `${array[titleIndex]} - ${array[titleIndex+1]}`
+
+    return ({ name, email, title })
+  };
+  
   const populateAnnotations = async (res) => {
       const textAnnotations = await getTextAnnotations(res.data.media);
       console.log(textAnnotations);
+
+
       setFormState((prevFormState) => {
         return {
           ...prevFormState,
-          name: textAnnotations[2],
-          email: textAnnotations[7],
-          title: `${textAnnotations[3]} - ${textAnnotations[4]}`,
+          ...readCardArray(textAnnotations)
         }
       })
       setIsLoading(false);
